@@ -1,5 +1,7 @@
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
+//there's nothing special about me feel free to leave if you're bored with me
 public class Medium {
 
     // ? 34. Find First and Last Position of Element in Sorted Array
@@ -236,4 +238,138 @@ public class Medium {
         }
         return answer;
     }
+
+    // ? 1818. Minimum Absolute Sum Difference
+    public int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+
+        int MOD = 1_000_000_007;
+        int n = nums1.length;
+
+        int[] sorted = nums1.clone();
+        Arrays.sort(sorted);
+
+        long total = 0;
+        long maxGain = 0;
+        for (int i = 0; i < n; i++) {
+            int a = nums1[i];
+            int b = nums2[i];
+            long diff = Math.abs(a - b);
+            total = (total + diff) % MOD;
+
+            int j = Arrays.binarySearch(sorted, b);
+            if (j < 0) {
+                j = -j - 1;
+            }
+
+            if (j < n) {
+                maxGain = Math.max(maxGain, diff - Math.abs(sorted[j] - b));
+            }
+            if (j > 0) {
+                maxGain = Math.max(maxGain, diff - Math.abs(sorted[j - 1] - b));
+            }
+        }
+
+        return (int) ((total - maxGain + MOD) % MOD);
+    }
+
+    // ? 1834. Single-Threaded CPU
+    public int[] getOrder(int[][] tasks) {
+        int n = tasks.length;
+        int[] order = new int[n];
+        int[][] sortedTasks = new int[n][3];
+
+        for (int i = 0; i < n; i++) {
+            sortedTasks[i][0] = tasks[i][0];
+            sortedTasks[i][1] = tasks[i][1];
+            sortedTasks[i][2] = i;
+        }
+
+        Arrays.sort(sortedTasks, (a, b) -> Integer.compare(a[0], b[0]));
+
+        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> {
+            if (a[1] == b[1]) {
+                return Integer.compare(a[2], b[2]);
+            }
+            return Integer.compare(a[1], b[1]);
+        });
+
+        int currentTime = 0;
+        int taskIndex = 0;
+        int orderIndex = 0;
+
+        while (taskIndex < n || !minHeap.isEmpty()) {
+            if (minHeap.isEmpty() && currentTime < sortedTasks[taskIndex][0]) {
+                currentTime = sortedTasks[taskIndex][0];
+            }
+
+            while (taskIndex < n && currentTime >= sortedTasks[taskIndex][0]) {
+                minHeap.offer(sortedTasks[taskIndex]);
+                taskIndex++;
+            }
+
+            if (!minHeap.isEmpty()) {
+                int[] currentTask = minHeap.poll();
+                order[orderIndex++] = currentTask[2];
+                currentTime += currentTask[1];
+            }
+        }
+
+        return order;
+    }
+
+    // ? 74. Search a 2D Matrix
+    public boolean searchMatrix(int[][] matrix , int target) {
+        int row = 0, col = matrix[0].length-1;
+
+        while(row<matrix.length && col>=0){
+            if(matrix[row][col] == target){
+                return true;
+            }else if(target < matrix[row][col]){
+                col--;
+            }else{
+                row++;
+            }
+        }
+        return false;
+    }
+
+    // ? 1901. Find a Peak Element II
+    public int[] findPeakGrid(int[][] mat) {
+        int rows = mat.length;
+        int cols = mat[0].length;
+
+        int left = 0;
+        int right = cols - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            // Step 1: Find row index of max element in column mid
+            int maxRow = 0;
+            for (int i = 0; i < rows; i++) {
+                if (mat[i][mid] > mat[maxRow][mid]) {
+                    maxRow = i;
+                }
+            }
+
+            // Step 2: Check left and right neighbors
+            int leftVal = (mid - 1 >= 0) ? mat[maxRow][mid - 1] : -1;
+            int rightVal = (mid + 1 < cols) ? mat[maxRow][mid + 1] : -1;
+
+            // Step 3: Peak condition
+            if (mat[maxRow][mid] > leftVal && mat[maxRow][mid] > rightVal) {
+                return new int[]{maxRow, mid};
+            }
+
+            // Step 4: Move search space
+            if (leftVal > mat[maxRow][mid]) {
+                right = mid - 1;  // search left side
+            } else {
+                left = mid + 1;   // search right side
+            }
+        }
+
+        return new int[]{-1, -1};  // shouldn't reach here
+    }
+
 }
