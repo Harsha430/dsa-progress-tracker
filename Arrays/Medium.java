@@ -372,4 +372,9 @@ public class Medium {
         return new int[]{-1, -1};  // shouldn't reach here
     }
 
+    // ? 1838. Frequency of the Most Frequent Element
+    public int maxFrequency(int[] nums, int k) {
+
+    }
+
 }
