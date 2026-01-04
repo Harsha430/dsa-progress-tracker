@@ -1,0 +1,225 @@
+import java.util.PriorityQueue;
+
+public class LinkedList {
+
+    // ? 2. Add Two Numbers
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        int carry = 0;
+
+        while (l1 != null || l2 != null || carry != 0) {
+            int digit1 = (l1 != null) ? l1.val : 0;
+            int digit2 = (l2 != null) ? l2.val : 0;
+            int valu = digit1 + digit2 + carry;
+            int modi = valu % 10;
+            ListNode newNode = new ListNode(modi);
+            tail.next = newNode;
+            tail = tail.next;
+            carry = valu / 10;
+
+            l1 = (l1 != null) ? l1.next : null;
+            l2 = (l2 != null) ? l2.next : null;
+        }
+
+        return dummy.next;
+    }
+
+    // ? 19. Remove Nth Node From End of List
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode fast = dummy;
+        ListNode slow = dummy;
+
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
+        }
+
+        while (fast != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
+
+    // ? 21. Merge Two Sorted Lists
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode ans = new ListNode();
+        ListNode tail = ans;
+
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                tail.next = list1;
+                tail = tail.next;
+                list1 = list1.next;
+            } else {
+                tail.next = list2;
+                tail = tail.next;
+                list2 = list2.next;
+            }
+
+        }
+
+        tail.next = list1 != null ? list1 : list2;
+        return ans.next;
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+
+        PriorityQueue<ListNode> p = new PriorityQueue<>((a, b) -> a.val - b.val);
+
+        for (int i = 0; i < lists.length; i++) {
+            if (lists[i] != null) {
+                p.offer(lists[i]);
+            }
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        while (!p.isEmpty()) {
+            ListNode node = p.poll();
+            curr.next = node;
+            curr = curr.next;
+
+            if (node.next != null) {
+                p.offer(node.next);
+            }
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode prev = dummy;
+
+        while (prev.next != null && prev.next.next != null) {
+            ListNode first = prev.next;
+            ListNode second = first.next;
+
+            // swap
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+
+            // move to next pair
+            prev = first;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0)
+            return head;
+
+        int count = 1;
+        ListNode tail = head;
+
+        while (tail.next != null) {
+            tail = tail.next;
+            count++;
+        }
+
+        k = k % count;
+        if (k == 0)
+            return head;
+
+        int itr = count - k;
+        ListNode prev = head;
+
+        for (int i = 1; i < itr; i++) {
+            prev = prev.next;
+        }
+
+        ListNode save = prev.next;
+        prev.next = null;
+        tail.next = head;
+
+        return save;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode temp = head;
+        while (temp != null && temp.next != null) {
+            if (temp.val == temp.next.val) {
+                temp.next = temp.next.next;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return head;
+    }
+
+    public ListNode deleteDuplicates1(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode temp = head;
+        while (temp != null && temp.next != null) {
+            if (temp.next != null && temp.val == temp.next.val) {
+                int dupVal = temp.val;
+                while (temp != null && temp.val == dupVal) {
+                    temp = temp.next;
+                }
+                prev.next = temp;
+            } else {
+                temp = temp.next;
+                prev = prev.next;
+            }
+        }
+        return dummy.next;
+    }
+
+    public ListNode partition(ListNode head, int x) {
+        ListNode d1 = new ListNode(0);
+        ListNode curr = d1;
+        ListNode d2 = new ListNode(0);
+        ListNode curr2 = d2;
+        while (head != null) {
+            if (head.val < x) {
+                curr.next = head;
+                curr = curr.next;
+            } else {
+                curr2.next = head;
+                curr2 = curr2.next;
+            }
+            head = head.next;
+        }
+        curr2.next = null;
+        curr.next = d2.next;
+        return d1.next;
+    }
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right)
+            return head;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode prev = dummy;
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
+        }
+        ListNode curr = prev.next; // first node of sublist
+        for (int i = 0; i < right - left; i++) {
+            ListNode temp = curr.next;
+            curr.next = temp.next;
+            temp.next = prev.next;
+            prev.next = temp;
+        }
+
+        return dummy.next;
+    }
+
+}
