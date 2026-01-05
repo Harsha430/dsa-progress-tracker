@@ -1,4 +1,4 @@
-import java.util.List;
+import org.w3c.dom.Node;
 
 public class CommonPatterns {
 
@@ -279,20 +279,31 @@ public class CommonPatterns {
 
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(0);
-        ListNode temp = dummy;
-        while (head != null && head.next != null) {
-            if (head.val == head.next.val) {
-                int duplicate = head.val;
-                head = head.next;
-                while (head.val == duplicate) {
-                    head = head.next;
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode temp = head;
+        while (temp != null && temp.next != null) {
+            if (temp.val == temp.next.val) {
+                int duplicate = temp.val;
+                while (temp != null && temp.val == duplicate) {
+                    temp = temp.next;
                 }
+                prev.next = temp;
+            } else {
+                temp = temp.next;
+                prev = prev.next;
             }
-
-            temp.next = head;
-            temp = temp.next;
-
         }
         return dummy.next;
     }
+
+    // ! Two Pointer – Same Direction
+    // ? Example:
+    // ? fast = head;
+    // ? slow = head;
+    // ? move fast n times
+    // ? then move both until fast == null
+    // *Remove Nth Node From End
+    // *Find Kth node from end
+
 }
