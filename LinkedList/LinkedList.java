@@ -2,7 +2,7 @@ import java.util.PriorityQueue;
 
 public class LinkedList {
 
-    // ? 2. Add Two Numbers
+    // ! 2. Add Two Numbers
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(0);
         ListNode tail = dummy;
@@ -25,7 +25,7 @@ public class LinkedList {
         return dummy.next;
     }
 
-    // ? 19. Remove Nth Node From End of List
+    // ! 19. Remove Nth Node From End of List
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -45,7 +45,7 @@ public class LinkedList {
         return dummy.next;
     }
 
-    // ? 21. Merge Two Sorted Lists
+    // ! 21. Merge Two Sorted Lists
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode ans = new ListNode();
         ListNode tail = ans;
@@ -60,15 +60,14 @@ public class LinkedList {
                 tail = tail.next;
                 list2 = list2.next;
             }
-
         }
 
         tail.next = list1 != null ? list1 : list2;
         return ans.next;
     }
 
+    // ! 23. Merge k Sorted Lists
     public ListNode mergeKLists(ListNode[] lists) {
-
         PriorityQueue<ListNode> p = new PriorityQueue<>((a, b) -> a.val - b.val);
 
         for (int i = 0; i < lists.length; i++) {
@@ -93,6 +92,7 @@ public class LinkedList {
         return dummy.next;
     }
 
+    // ! 24. Swap Nodes in Pairs
     public ListNode swapPairs(ListNode head) {
         if (head == null || head.next == null)
             return head;
@@ -118,6 +118,7 @@ public class LinkedList {
         return dummy.next;
     }
 
+    // ! 61. Rotate List
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null || head.next == null || k == 0)
             return head;
@@ -148,6 +149,7 @@ public class LinkedList {
         return save;
     }
 
+    // ! 83. Remove Duplicates from Sorted List
     public ListNode deleteDuplicates(ListNode head) {
         ListNode temp = head;
         while (temp != null && temp.next != null) {
@@ -160,13 +162,15 @@ public class LinkedList {
         return head;
     }
 
+    // ! 82. Remove Duplicates from Sorted List II
     public ListNode deleteDuplicates1(ListNode head) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
         ListNode prev = dummy;
         ListNode temp = head;
+
         while (temp != null && temp.next != null) {
-            if (temp.next != null && temp.val == temp.next.val) {
+            if (temp.val == temp.next.val) {
                 int dupVal = temp.val;
                 while (temp != null && temp.val == dupVal) {
                     temp = temp.next;
@@ -180,11 +184,13 @@ public class LinkedList {
         return dummy.next;
     }
 
+    // ! 86. Partition List
     public ListNode partition(ListNode head, int x) {
         ListNode d1 = new ListNode(0);
         ListNode curr = d1;
         ListNode d2 = new ListNode(0);
         ListNode curr2 = d2;
+
         while (head != null) {
             if (head.val < x) {
                 curr.next = head;
@@ -195,11 +201,13 @@ public class LinkedList {
             }
             head = head.next;
         }
+
         curr2.next = null;
         curr.next = d2.next;
         return d1.next;
     }
 
+    // ! 92. Reverse Linked List II
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if (head == null || left == right)
             return head;
@@ -211,7 +219,8 @@ public class LinkedList {
         for (int i = 1; i < left; i++) {
             prev = prev.next;
         }
-        ListNode curr = prev.next; // first node of sublist
+
+        ListNode curr = prev.next;
         for (int i = 0; i < right - left; i++) {
             ListNode temp = curr.next;
             curr.next = temp.next;
@@ -221,5 +230,4 @@ public class LinkedList {
 
         return dummy.next;
     }
-
 }
