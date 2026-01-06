@@ -1,4 +1,4 @@
-import org.w3c.dom.Node;
+import java.util.PriorityQueue;
 
 public class CommonPatterns {
 
@@ -305,5 +305,74 @@ public class CommonPatterns {
     // ? then move both until fast == null
     // *Remove Nth Node From End
     // *Find Kth node from end
+
+    // ! Merge Pattern (Sorted Lists)
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> p = new PriorityQueue<>(
+                (a, b) -> a.val - b.val);
+
+        for (int i = 0; i < lists.length; i++) {
+            if (lists[i] != null)
+                p.offer(lists[i]);
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        while (!(p.isEmpty())) {
+            ListNode node = p.poll();
+            curr.next = node;
+            curr = curr.next;
+            if (node.next != null) {
+                p.offer(node.next);
+            }
+        }
+        return dummy.next;
+    }
+
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode mid = middleNode1(head);
+        ListNode right = mid.next;
+        mid.next = null;
+        ListNode left = sortList(head);
+        right = sortList(right);
+
+        return merge(left, right);
+    }
+
+    private ListNode merge(ListNode left, ListNode right) {
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                curr.next = left;
+                left = left.next;
+            } else {
+                curr.next = right;
+                right = right.next;
+            }
+            curr = curr.next;
+        }
+
+        curr.next = left != null ? left : right;
+        return dummy.next;
+    }
+
+    private ListNode middleNode1(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
 
 }
