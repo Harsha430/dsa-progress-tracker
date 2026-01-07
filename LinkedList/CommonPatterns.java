@@ -117,6 +117,7 @@ public class CommonPatterns {
         return dummy.next;
     }
 
+    // * 234. Palindrome Linked List
     public boolean isPalindrome(ListNode head) {
         ListNode temp = head;
         int count = 0;
@@ -164,6 +165,7 @@ public class CommonPatterns {
         return false;
     }
 
+    // * 142. Linked List Cycle II
     public ListNode detectCycle(ListNode head) {
         if (head == null || head.next == null)
             return null;
@@ -213,6 +215,7 @@ public class CommonPatterns {
     // ? ListNode dummy = new ListNode(0);
     // ? dummy.next = head;
 
+    // * 19. Remove Nth Node From End of List
     public ListNode removeNthFromEnd(ListNode head, int n) {
         if (head == null)
             return head;
@@ -234,6 +237,7 @@ public class CommonPatterns {
         return dummy.next;
     }
 
+    // * 21. Merge Two Sorted Lists
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(0);
         ListNode temp = dummy;
@@ -255,6 +259,7 @@ public class CommonPatterns {
 
     }
 
+    // * 86. Partition List
     public ListNode partition(ListNode head, int x) {
         ListNode dummyLess = new ListNode(0);
         ListNode dummyHigh = new ListNode(0);
@@ -277,6 +282,7 @@ public class CommonPatterns {
         return d1.next;
     }
 
+    // * 82. Remove Duplicates from Sorted List II
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -308,6 +314,7 @@ public class CommonPatterns {
 
     // ! Merge Pattern (Sorted Lists)
 
+    // * 23. Merge k Sorted Lists
     public ListNode mergeKLists(ListNode[] lists) {
         PriorityQueue<ListNode> p = new PriorityQueue<>(
                 (a, b) -> a.val - b.val);
@@ -331,6 +338,7 @@ public class CommonPatterns {
         return dummy.next;
     }
 
+    // * 148. Sort List
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -373,6 +381,30 @@ public class CommonPatterns {
         }
 
         return slow;
+    }
+
+    public ListNode oddEvenList(ListNode head) {
+
+        ListNode evenDummy = new ListNode(0);
+        ListNode oddDummy = new ListNode(0);
+        ListNode odd = oddDummy;
+        ListNode even = evenDummy;
+        while (head != null) {
+            odd.next = head;
+            odd = odd.next;
+            head = head.next;
+
+            if (head != null) {
+                even.next = head;
+                even = even.next;
+                head = head.next;
+            }
+        }
+        even.next = null;
+        odd.next = evenDummy.next;
+
+        return oddDummy.next;
+
     }
 
 }

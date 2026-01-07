@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class LinkedList {
@@ -268,6 +269,62 @@ public class LinkedList {
             head = next;
         }
         return prev;
+    }
+
+    // * 147. Insertion Sort List
+    public ListNode insertionSortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode next = curr.next;
+            ListNode prev = dummy;
+
+            while (prev.next != null && prev.next.val < curr.val) {
+                prev = prev.next;
+            }
+            curr.next = prev.next;
+            prev.next = curr;
+
+            curr = next;
+
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
+
+        l1 = reverse(l1);
+        l2 = reverse(l2);
+
+        int carry = 0;
+        ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
+
+        while (l1 != null || l2 != null) {
+            int a = (l1 != null) ? l1.val : 0;
+            int b = (l2 != null) ? l2.val : 0;
+
+            int sum = a + b + carry;
+            carry = sum / 10;
+
+            curr.next = new ListNode(sum % 10);
+            curr = curr.next;
+
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
+        }
+
+        if (carry > 0) {
+            curr.next = new ListNode(carry);
+        }
+
+        return reverse(dummy.next);
     }
 
 }
