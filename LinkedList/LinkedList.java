@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class LinkedList {
 
@@ -271,7 +274,7 @@ public class LinkedList {
         return prev;
     }
 
-    // * 147. Insertion Sort List
+    // ! 147. Insertion Sort List
     public ListNode insertionSortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
@@ -297,6 +300,7 @@ public class LinkedList {
         return dummy.next;
     }
 
+    // ! 445. Add Two Numbers II
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
 
         l1 = reverse(l1);
@@ -316,8 +320,10 @@ public class LinkedList {
             curr.next = new ListNode(sum % 10);
             curr = curr.next;
 
-            if (l1 != null) l1 = l1.next;
-            if (l2 != null) l2 = l2.next;
+            if (l1 != null)
+                l1 = l1.next;
+            if (l2 != null)
+                l2 = l2.next;
         }
 
         if (carry > 0) {
@@ -327,4 +333,78 @@ public class LinkedList {
         return reverse(dummy.next);
     }
 
+    // ! 817. Linked List Components
+    public int numComponents(ListNode head, int[] nums) {
+        HashSet<Integer> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            set.add(nums[i]);
+        }
+
+        int components = 0;
+        while (head != null) {
+            if (set.contains(head.val) &&
+                    (head.next == null || !set.contains(head.next.val))) {
+                components++;
+            }
+            head = head.next;
+        }
+        return components;
+    }
+
+    // ! 1019. Next Greater Node In Linked List
+    public int[] nextLargerNodes(ListNode head) {
+        List<Integer> s = new ArrayList<>();
+        while (head != null) {
+            s.add(head.val);
+            head = head.next;
+        }
+        int[] arr = new int[s.size()];
+        Stack<Integer> ss = new Stack<>();
+        for (int i = 0; i < arr.length; i++) {
+            while (!ss.isEmpty() && s.get(i) > s.get(ss.peek())) {
+                arr[ss.pop()] = s.get(i);
+            }
+            ss.push(i);
+        }
+        return arr;
+    }
+
+    // ! 237. Delete Node in a Linked List
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    // ! 160. Intersection of Two Linked Lists
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null)
+            return null;
+        ListNode pA = headA;
+        ListNode pB = headB;
+
+        while (pA != pB) {
+            pA = pA == null ? headB : pA.next;
+            pB = pB == null ? headA : pB.next;
+        }
+        return pA;
+    }
+
+    // ! 203. Remove Linked List Elements
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null)
+            return null;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode curr = dummy;
+
+        while (curr.next != null) {
+            if (curr.next.val == val) {
+                curr.next = curr.next.next;
+            } else {
+                curr = curr.next;
+            }
+        }
+
+        return dummy.next;
+    }
 }

@@ -383,6 +383,7 @@ public class CommonPatterns {
         return slow;
     }
 
+    // * 328. Odd Even Linked List
     public ListNode oddEvenList(ListNode head) {
 
         ListNode evenDummy = new ListNode(0);
