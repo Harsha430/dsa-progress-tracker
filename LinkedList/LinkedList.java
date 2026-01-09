@@ -407,4 +407,83 @@ public class LinkedList {
 
         return dummy.next;
     }
+
+    // ! 725. Split Linked List in Parts
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        int count = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
+
+        int base = count / k;
+        int rem = count % k;
+
+        ListNode[] arr = new ListNode[k];
+        ListNode curr = head;
+
+        // 2. Split
+        for (int i = 0; i < k; i++) {
+            arr[i] = curr;
+            int partSize = base + (i < rem ? 1 : 0);
+
+            for (int j = 1; j < partSize && curr != null; j++) {
+                curr = curr.next;
+            }
+
+            if (curr != null) {
+                ListNode next = curr.next;
+                curr.next = null;
+                curr = next;
+            }
+        }
+        return arr;
+    }
+
+    // ! 1721. Swapping Nodes in a Linked List
+    public ListNode swapNodes(ListNode head, int k) {
+        ListNode first = null;
+        ListNode second = head;
+        ListNode curr = head;
+
+        int count = 1;
+        while (curr != null) {
+            if (count == k) {
+                first = curr;
+            }
+            if (count > k) {
+                second = second.next;
+            }
+            curr = curr.next;
+            count++;
+        }
+
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+
+        return head;
+    }
+
+    // ! 2095. Delete the Middle Node of a Linked List
+    public ListNode deleteMiddle(ListNode head) {
+        if (head == null || head.next == null)
+            return null;
+        ListNode slow = head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            prev = prev.next;
+            fast = fast.next.next;
+        }
+        prev.next = prev.next.next;
+
+        return head;
+    }
+
 }
