@@ -486,4 +486,21 @@ public class LinkedList {
         return head;
     }
 
+    // public int[] nextLargerNodes(ListNode head) {
+    //     List<Integer> s = new ArrayList<>();
+    //     while (head != null) {
+    //         s.add(head.val);
+    //         head = head.next;
+    //     }
+    //     int[] arr = new int[s.size()];
+    //     Stack<Integer> ss = new Stack<>();
+    //     for (int i = 0; i < arr.length; i++) {
+    //         while (!ss.isEmpty() && s.get(i) > s.get(ss.peek())) {
+    //             arr[ss.pop()] = s.get(i);
+    //         }
+    //         ss.push(i);
+    //     }
+    //     return arr;
+    // }
+
 }

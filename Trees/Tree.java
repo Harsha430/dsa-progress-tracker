@@ -1,38 +1,22 @@
 package Trees;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tree {
-    // ? DFS Traversal Pattern (Depth-First Search)
-    public boolean isSymmetric(TreeNode root) {
-        Queue<TreeNode> q = new LinkedList<>();
-        if (root == null) {
-            return true;
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorder(list, root);
+        return list;
+    }
+
+    private void inorder(List<Integer> list, TreeNode node) {
+        if (node == null) {
+            return;
         }
-        q.add(root.left);
-        q.add(root.right);
+        inorder(list, node.left);
+        list.add(node.val);
+        inorder(list, node.right);
 
-        while (!q.isEmpty()) {
-            TreeNode left = q.poll();
-            TreeNode right = q.poll();
-
-            if (left == null && right == null) {
-                continue;
-            }
-            if (left == null || right == null) {
-                return false;
-            }
-
-            if (left.val != right.val) {
-                return false;
-            }
-
-            q.add(left.left);
-            q.add(right.right);
-            q.add(left.right);
-            q.add(right.left);
-        }
-        return true;
     }
 }
