@@ -504,24 +504,100 @@ public class LinkedList {
     // }
 
     // public ListNode swapNodes(ListNode head, int k) {
-    //     if (head == null)
-    //         return null;
-    //     ListNode right = head;
-    //     ListNode left = head;
-    //     for (int i = 1; i < k; i++) {
-    //         right = right.next;
-    //     }
-
-    //     left = right;
-    //     ListNode curr = head;
-    //     while (right.next != null) {
-    //         right = right.next;
-    //         curr = curr.next;
-    //     }
-
-    //     int temp = left.val;
-    //     left.val = curr.val;
-    //     curr.val = temp;
-    //     return head;
+    // if (head == null)
+    // return null;
+    // ListNode right = head;
+    // ListNode left = head;
+    // for (int i = 1; i < k; i++) {
+    // right = right.next;
     // }
+
+    // left = right;
+    // ListNode curr = head;
+    // while (right.next != null) {
+    // right = right.next;
+    // curr = curr.next;
+    // }
+
+    // int temp = left.val;
+    // left.val = curr.val;
+    // curr.val = temp;
+    // return head;
+    // }
+
+    // ! 2074. Reverse Nodes in Even Length Groups
+    public ListNode reverseEvenLengthGroups(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode prev = dummy;
+        ListNode curr = head;
+
+        int i = 1;
+        while (curr != null) {
+            int j = 0;
+            ListNode probe = curr;
+
+            for (; j < i && probe != null; j++) {
+                probe = probe.next;
+            }
+
+            if (j % 2 == 0) {
+                prev.next = reverse(curr, j);
+                prev = curr;
+                curr = curr.next;
+            } else {
+                for (int k = 0; k < j; k++) {
+                    prev = curr;
+                    curr = curr.next;
+                }
+            }
+
+            i++;
+        }
+
+        return dummy.next;
+    }
+
+    private ListNode reverse(ListNode head, int k) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (k-- > 0) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        head.next = curr;
+        return prev;
+    }
+
+    // ! 2130. Maximum Twin Sum of a Linked List
+    public int pairSum(ListNode head) {
+        ListNode mid = findMiddle(head);
+        ListNode second = reverse(mid);
+        int max = 0;
+        ListNode first = head;
+
+        while (second != null) {
+            max = Math.max(max, first.val + second.val);
+            first = first.next;
+            second = second.next;
+        }
+        return max;
+    }
+
+    private ListNode findMiddle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
 }
