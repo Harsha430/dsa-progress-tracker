@@ -120,4 +120,21 @@ public class Tree {
             sb.append(")");
         }
     }
+
+    public List<Integer> preorder(Node root) {
+        List<Integer> ans = new ArrayList<>();
+        traverse(ans, root);
+        return ans;
+    }
+
+    private void traverse(List<Integer> ans, Node root) {
+        if (root == null)
+            return;
+
+        ans.add(root.val);
+        for (Node kid : root.children) {
+            traverse(ans, kid);
+        }
+    }
+
 }
