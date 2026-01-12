@@ -487,20 +487,41 @@ public class LinkedList {
     }
 
     // public int[] nextLargerNodes(ListNode head) {
-    //     List<Integer> s = new ArrayList<>();
-    //     while (head != null) {
-    //         s.add(head.val);
-    //         head = head.next;
-    //     }
-    //     int[] arr = new int[s.size()];
-    //     Stack<Integer> ss = new Stack<>();
-    //     for (int i = 0; i < arr.length; i++) {
-    //         while (!ss.isEmpty() && s.get(i) > s.get(ss.peek())) {
-    //             arr[ss.pop()] = s.get(i);
-    //         }
-    //         ss.push(i);
-    //     }
-    //     return arr;
+    // List<Integer> s = new ArrayList<>();
+    // while (head != null) {
+    // s.add(head.val);
+    // head = head.next;
+    // }
+    // int[] arr = new int[s.size()];
+    // Stack<Integer> ss = new Stack<>();
+    // for (int i = 0; i < arr.length; i++) {
+    // while (!ss.isEmpty() && s.get(i) > s.get(ss.peek())) {
+    // arr[ss.pop()] = s.get(i);
+    // }
+    // ss.push(i);
+    // }
+    // return arr;
     // }
 
+    // public ListNode swapNodes(ListNode head, int k) {
+    //     if (head == null)
+    //         return null;
+    //     ListNode right = head;
+    //     ListNode left = head;
+    //     for (int i = 1; i < k; i++) {
+    //         right = right.next;
+    //     }
+
+    //     left = right;
+    //     ListNode curr = head;
+    //     while (right.next != null) {
+    //         right = right.next;
+    //         curr = curr.next;
+    //     }
+
+    //     int temp = left.val;
+    //     left.val = curr.val;
+    //     curr.val = temp;
+    //     return head;
+    // }
 }
