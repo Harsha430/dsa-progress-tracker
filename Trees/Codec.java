@@ -3,6 +3,7 @@ package Trees;
 import java.util.ArrayList;
 import java.util.List;
 
+// ? 297. Serialize and Deserialize Binary Tree (preorder + null markers)
 public class Codec {
 
     // Encodes a tree to a single string.

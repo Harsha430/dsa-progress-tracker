@@ -7,22 +7,7 @@ public class Tree {
 
     // * Pattern 1 — DFS Traversals
 
-    // ! 94. Binary Tree Inorder Traversal
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        inOrder(list, root);
-        return list;
-    }
-
-    private void inOrder(List<Integer> list, TreeNode node) {
-        if (node == null) {
-            return;
-        }
-        inOrder(list, node.left);
-        list.add(node.val);
-        inOrder(list, node.right);
-
-    }
+    // ^ PREORDER DFS (Root → Left → Right)
 
     // ! 144. Binary Tree Preorder Traversal
     public List<Integer> preorderTraversal(TreeNode root) {
@@ -41,22 +26,7 @@ public class Tree {
 
     }
 
-    // ! 145. Binary Tree Postorder Traversal
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        postOrder(list, root);
-        return list;
-    }
-
-    private void postOrder(List<Integer> list, TreeNode node) {
-        if (node == null) {
-            return;
-        }
-        postOrder(list, node.left);
-        postOrder(list, node.right);
-        list.add(node.val);
-    }
-
+    // ! 100. Same Tree
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
@@ -68,6 +38,7 @@ public class Tree {
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
+    // ! 572. Subtree of Another Tree
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         if (root == null)
             return false;
@@ -80,6 +51,7 @@ public class Tree {
                 isSubtree(root.right, subRoot);
     }
 
+    // ! 226. Invert Binary Tree
     public TreeNode invertTree(TreeNode root) {
         if (root == null) {
             return null;
@@ -93,6 +65,7 @@ public class Tree {
         return root;
     }
 
+    // ! 606. Construct String from Binary Tree
     public String tree2str(TreeNode root) {
         if (root == null) {
             return null;
@@ -121,6 +94,7 @@ public class Tree {
         }
     }
 
+    // ! 589. N-ary Tree Preorder Traversal
     public List<Integer> preorder(Node root) {
         List<Integer> ans = new ArrayList<>();
         traverse(ans, root);
@@ -135,6 +109,43 @@ public class Tree {
         for (Node kid : root.children) {
             traverse(ans, kid);
         }
+    }
+
+    // ^ INORDER DFS (Left → Root → Right)
+
+    // ! 94. Binary Tree Inorder Traversal
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inOrder(list, root);
+        return list;
+    }
+
+    private void inOrder(List<Integer> list, TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        inOrder(list, node.left);
+        list.add(node.val);
+        inOrder(list, node.right);
+
+    }
+
+    // ^ POSTORDER DFS (Left → Right → Root)
+
+    // ! 145. Binary Tree Postorder Traversal
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        postOrder(list, root);
+        return list;
+    }
+
+    private void postOrder(List<Integer> list, TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        postOrder(list, node.left);
+        postOrder(list, node.right);
+        list.add(node.val);
     }
 
 }

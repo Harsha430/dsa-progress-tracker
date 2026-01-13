@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.Stack;
 
 public class LinkedList {
@@ -600,4 +601,124 @@ public class LinkedList {
         return slow;
     }
 
+    // ! 2326. Spiral Matrix IV
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        int[][] arr = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = -1;
+            }
+        }
+        int top = 0;
+        int bottom = m - 1;
+        int left = 0;
+        int right = n - 1;
+        while (head != null && top <= bottom && left <= right) {
+            for (int i = left; i <= right && head != null; i++) {
+                arr[top][i] = head.val;
+                head = head.next;
+            }
+            top++;
+            for (int i = top; i <= bottom && head != null; i++) {
+                arr[i][right] = head.val;
+                head = head.next;
+            }
+            right--;
+            if (top <= bottom) {
+                for (int i = right; i >= left && head != null; i--) {
+                    arr[bottom][i] = head.val;
+                    head = head.next;
+                }
+                bottom--;
+            }
+            if (left <= right) {
+                for (int i = bottom; i >= top && head != null; i--) {
+                    arr[i][left] = head.val;
+                    head = head.next;
+                }
+                left++;
+            }
+
+        }
+        return arr;
+    }
+
+    // ! 2816. Double a Number Represented as a Linked List
+    public ListNode doubleIt(ListNode head) {
+        head = reverse(head);
+
+        int carry = 0;
+        ListNode curr = head;
+
+        while (curr != null) {
+            int val = curr.val * 2 + carry;
+            curr.val = val % 10;
+            carry = val / 10;
+            curr = curr.next;
+        }
+        head = reverse(head);
+
+        if (carry > 0) {
+            ListNode newHead = new ListNode(carry);
+            newHead.next = head;
+            return newHead;
+        }
+
+        return head;
+    }
+
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        Set<Integer> set = new HashSet<>();
+        for (int i : nums) {
+            set.add(i);
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode prev = dummy;
+        while (head != null) {
+            if (!set.contains(head.val)) {
+                prev.next = head;
+                prev = head;
+            }
+            head = head.next;
+        }
+        prev.next = null;
+        return dummy.next;
+    }
+
+    public int minimumPairRemoval(int[] nums) {
+        List<Integer> list = new ArrayList<>();
+        for (int n : nums)
+            list.add(n);
+
+        int count = 0;
+
+        while (!checkArray(list)) {
+            int minSum = Integer.MAX_VALUE;
+            int index = 0;
+
+            for (int i = 0; i < list.size() - 1; i++) {
+                int sum = list.get(i) + list.get(i + 1);
+                if (sum < minSum) {
+                    minSum = sum;
+                    index = i;
+                }
+            }
+
+            list.remove(index);
+            list.remove(index);
+            list.add(index, minSum);
+
+            count++;
+        }
+
+        return count;
+    }
+
+    private boolean checkArray(List<Integer> nums) {
+        for (int i = 0; i < nums.size() - 1; i++) {
+            if (nums.get(i) > nums.get(i + 1))
+                return false;
+        }
+        return true;
+    }
 }
