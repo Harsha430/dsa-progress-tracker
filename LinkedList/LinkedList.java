@@ -721,4 +721,68 @@ public class LinkedList {
         }
         return true;
     }
+
+    public ListNode mergeNodes(ListNode head) {
+        if (head == null)
+            return null;
+        head = head.next;
+        ListNode dummy = new ListNode(0);
+        ListNode prev = dummy;
+        while (head != null) {
+            Output op = getSum(head);
+            prev.next = new ListNode(op.getSum());
+            prev = prev.next;
+            head = op.getNode().next;
+        }
+        return dummy.next;
+    }
+
+    private Output getSum(ListNode head) {
+        int sum = 0;
+        while (head.val != 0) {
+            sum += head.val;
+            head = head.next;
+        }
+        return new Output(head, sum);
+    }
+
+    class Output {
+        ListNode node;
+        int sum;
+
+        Output(ListNode node, int sum) {
+            this.node = node;
+            this.sum = sum;
+        }
+
+        public ListNode getNode() {
+            return node;
+        }
+
+        public int getSum() {
+            return sum;
+        }
+    }
+
+    // ^ other way
+    public ListNode mergeNodes1(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+
+        int currentSum = 0;
+        ListNode current = head.next;
+        while (current != null) {
+            if (current.val == 0) {
+                tail.next = new ListNode(currentSum);
+                tail = tail.next;
+                currentSum = 0;
+            } else {
+                currentSum += current.val;
+            }
+            current = current.next;
+        }
+
+        return dummy.next;
+    }
+
 }
