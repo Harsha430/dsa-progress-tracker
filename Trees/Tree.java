@@ -148,4 +148,13 @@ public class Tree {
         list.add(node.val);
     }
 
+    //  private void postOrder(List<Integer> list, TreeNode node) {
+    //     if (node == null) {
+    //         return;
+    //     }
+    //     postOrder(list, node.left);
+    //     postOrder(list, node.right);
+    //     list.add(node.val);
+    // }
+
 }
