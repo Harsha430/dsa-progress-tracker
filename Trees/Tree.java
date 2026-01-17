@@ -127,7 +127,22 @@ public class Tree {
         inOrder(list, node.left);
         list.add(node.val);
         inOrder(list, node.right);
+    }
 
+    // ! 98. Validate Binary Search Tree
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean validate(TreeNode node, long min, long max) {
+        if (node == null)
+            return true;
+
+        if (node.val <= min || node.val >= max)
+            return false;
+
+        return validate(node.left, min, node.val) &&
+                validate(node.right, node.val, max);
     }
 
     // ^ POSTORDER DFS (Left → Right → Root)
@@ -148,13 +163,13 @@ public class Tree {
         list.add(node.val);
     }
 
-    //  private void postOrder(List<Integer> list, TreeNode node) {
-    //     if (node == null) {
-    //         return;
-    //     }
-    //     postOrder(list, node.left);
-    //     postOrder(list, node.right);
-    //     list.add(node.val);
+    // private void postOrder(List<Integer> list, TreeNode node) {
+    // if (node == null) {
+    // return;
+    // }
+    // postOrder(list, node.left);
+    // postOrder(list, node.right);
+    // list.add(node.val);
     // }
 
 }
